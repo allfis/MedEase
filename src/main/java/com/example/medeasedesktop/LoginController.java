@@ -60,12 +60,10 @@ public class LoginController {
             new Alert(Alert.AlertType.WARNING, "Please select a role (Doctor/Admin).").show();
             return;
         }
-
         if (email.isEmpty() || password == null || password.isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Gmail and password are required.").show();
             return;
         }
-
         if (!email.endsWith("@gmail.com")) {
             new Alert(Alert.AlertType.WARNING, "Enter a valid Gmail address.").show();
             return;
