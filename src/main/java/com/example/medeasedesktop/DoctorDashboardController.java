@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
-
 public class DoctorDashboardController {
     @FXML
     private StackPane mainContent;

@@ -28,7 +28,6 @@ public class LoginController {
 
     @FXML
     private TextField showPasswordField;
-
     @FXML
     private CheckBox showPasswordCheck;
 

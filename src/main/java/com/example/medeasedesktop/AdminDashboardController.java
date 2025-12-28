@@ -53,7 +53,6 @@ public class AdminDashboardController {
         }
     }
 
-
     @FXML
     void handleExit(ActionEvent event) {
         System.exit(0);

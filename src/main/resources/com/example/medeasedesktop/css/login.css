@@ -13,6 +13,7 @@
     -fx-border-color: rgba(15, 23, 42, 0.10);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 30, 0.25, 0, 10);
 }
+
 .app-title {
     -fx-text-fill: #0F172A;
     -fx-font-size: 26px;
