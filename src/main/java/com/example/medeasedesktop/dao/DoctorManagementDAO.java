@@ -2,7 +2,6 @@ package com.example.medeasedesktop.dao;
 
 import com.example.medeasedesktop.db.DB;
 import com.example.medeasedesktop.model.DoctorRow;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -66,13 +65,17 @@ public class DoctorManagementDAO {
 
             try (PreparedStatement ps = c.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, email);
-                ps.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
+                ps.setString(2, password == null ? "" : password);
                 ps.setString(3, fullName);
                 ps.executeUpdate();
 
                 int newId;
                 try (ResultSet keys = ps.getGeneratedKeys()) {
-                    if (!keys.next()) { c.rollback(); c.setAutoCommit(true); return false; }
+                    if (!keys.next()) {
+                        c.rollback();
+                        c.setAutoCommit(true);
+                        return false;
+                    }
                     newId = keys.getInt(1);
                 }
 

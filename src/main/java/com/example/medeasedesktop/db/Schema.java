@@ -129,9 +129,15 @@ public final class Schema {
 
             try {
                 s.execute("""
-                INSERT OR IGNORE INTO users(role,email,password_hash,full_name,enabled)
-                VALUES('ADMIN','admin@medease.com','salt:hash','Admin',1)
-                """);
+INSERT OR IGNORE INTO users(role,email,password_hash,full_name,enabled)
+VALUES('ADMIN','admin@medease.com','admin123','Admin',1)
+""");
+
+                s.execute("""
+INSERT OR IGNORE INTO users(role,email,password_hash,full_name,enabled)
+VALUES('DOCTOR','doctor@medease.com','123','Doctor',1)
+""");
+
             } catch (Exception ignored) {}
 
         } catch (Exception e) {

@@ -6,7 +6,7 @@
 <VBox spacing="12"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.medeasedesktop.controller.ReviewsController"
+      fx:controller="com.example.medeasedesktop.ReviewsController"
       styleClass="content-card">
 
     <Label text="Patient Reviews" styleClass="h1"/>

@@ -11,21 +11,24 @@ public class DoctorProfileDAO {
 
     public DoctorProfile getByUserId(int userId) {
         String sql = """
-            SELECT u.id, u.full_name, u.email,
-                   dp.phone, dp.specialty, dp.about,
-                   COALESCE(dp.avg_rating,0.0) AS avg_rating,
-                   COALESCE(dp.total_reviews,0) AS total_reviews,
-                   COALESCE(dp.month_reviews,0) AS month_reviews
+            SELECT u.id,
+                   u.full_name,
+                   u.email,
+                   dp.phone,
+                   dp.specialty,
+                   dp.about,
+                   COALESCE((SELECT AVG(r.rating) FROM reviews r WHERE r.doctor_id=u.id),0.0) AS avg_rating,
+                   COALESCE((SELECT COUNT(*) FROM reviews r WHERE r.doctor_id=u.id),0) AS total_reviews,
+                   COALESCE((SELECT COUNT(*) FROM reviews r 
+                             WHERE r.doctor_id=u.id 
+                               AND strftime('%Y-%m', r.created_at)=strftime('%Y-%m','now')),0) AS month_reviews
             FROM users u
-            LEFT JOIN doctor_profile dp ON dp.user_id = u.id
-            WHERE u.id = ? AND u.role = 'DOCTOR'
+            LEFT JOIN doctor_profile dp ON dp.user_id=u.id
+            WHERE u.id=? AND u.role='DOCTOR'
         """;
 
-        try (Connection c = DB.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
+        try (Connection c = DB.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setInt(1, userId);
-
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) return null;
 
