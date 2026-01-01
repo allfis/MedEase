@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="12"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.controller.AppointmentsController"
+      styleClass="content-card">
+
+    <Label text="Appointments" styleClass="h1"/>
+
+    <TableView fx:id="table" prefHeight="320">
+        <columns>
+            <TableColumn fx:id="patientCol" text="Patient"/>
+            <TableColumn fx:id="dateCol" text="Date"/>
+            <TableColumn fx:id="timeCol" text="Time"/>
+            <TableColumn fx:id="doctorCol" text="Doctor"/>
+            <TableColumn fx:id="statusCol" text="Status"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Approve" onAction="#approveSelected"/>
+        <Button text="Reject" onAction="#rejectSelected"/>
+        <Button text="Assign Doctor" onAction="#assignDoctorSelected"/>
+        <Button text="Mark Completed" onAction="#markCompletedSelected"/>
+        <Button text="Request Reschedule" onAction="#requestRescheduleSelected"/>
+    </HBox>
+
+</VBox>

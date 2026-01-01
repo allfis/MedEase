@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="12"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.DoctorManagementController"
+      styleClass="content-card">
+
+    <Label text="Doctor Management" styleClass="h1"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Search doctor by name/email..." HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="statusFilter" promptText="Status"/>
+        <Button text="Refresh" onAction="#refresh"/>
+    </HBox>
+
+    <TableView fx:id="doctorTable" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="idCol" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="nameCol" text="Doctor Name" prefWidth="200"/>
+            <TableColumn fx:id="emailCol" text="Email" prefWidth="220"/>
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Doctor" onAction="#addDoctor"/>
+        <Button text="Enable" onAction="#enableSelected"/>
+        <Button text="Disable" onAction="#disableSelected"/>
+        <Button text="Remove" onAction="#removeSelected"/>
+    </HBox>
+
+</VBox>

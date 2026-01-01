@@ -1,86 +1,90 @@
 .root-pane {
-    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E293B);
+    -fx-background-color: linear-gradient(to bottom right, #0E3A4A, #0B2F3C);
     -fx-font-family: "Segoe UI", "Inter", "Arial";
 }
 
 .login-card {
-    -fx-background-color: rgba(255, 255, 255, 0.96);
-    -fx-padding: 34;
+    -fx-background-color: rgba(248, 250, 249, 0.97);
+    -fx-padding: 36;
     -fx-spacing: 18;
     -fx-alignment: center;
-    -fx-background-radius: 18;
-    -fx-border-radius: 18;
-    -fx-border-color: rgba(15, 23, 42, 0.10);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 30, 0.25, 0, 10);
+    -fx-background-radius: 22;
+    -fx-border-radius: 22;
+    -fx-border-color: rgba(14, 58, 74, 0.15);
+    -fx-effect: dropshadow(gaussian, rgba(2, 6, 23, 0.35), 36, 0.25, 0, 12);
+}
+
+.label {
+    -fx-text-fill: #0F172A;
 }
 
 .app-title {
-    -fx-text-fill: #0F172A;
-    -fx-font-size: 26px;
-    -fx-font-weight: 800;
+    -fx-font-size: 32px;
+    -fx-font-weight: 900;
+    -fx-text-fill: linear-gradient(to right, #4DB6AC, #E6A38C);
 }
 
 .app-subtitle {
-    -fx-text-fill: #475569;
+    -fx-text-fill: rgba(15, 23, 42, 0.65);
     -fx-font-size: 13px;
-}
-
-.block {
-    -fx-padding: 4 0 0 0;
-    -fx-max-width: 380;
+    -fx-font-weight: 600;
 }
 
 .field-label {
-    -fx-text-fill: #0F172A;
+    -fx-text-fill: rgba(14, 58, 74, 0.85);
     -fx-font-size: 12px;
-    -fx-font-weight: 700;
+    -fx-font-weight: 800;
 }
 
-.text-field, .password-field {
-    -fx-background-color: #F8FAFC;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-border-color: #CBD5E1;
-    -fx-padding: 11 12;
-    -fx-font-size: 13px;
+.text-field,
+.password-field {
+    -fx-background-color: #F1F5F4;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: rgba(14, 58, 74, 0.25);
+    -fx-padding: 12;
+    -fx-font-size: 13.5px;
     -fx-text-fill: #0F172A;
 }
 
-.text-field:focused, .password-field:focused {
+.text-field:focused,
+.password-field:focused {
     -fx-background-color: white;
-    -fx-border-color: #3B82F6;
-    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.22), 12, 0.35, 0, 0);
+    -fx-border-color: #4DB6AC;
+    -fx-effect: dropshadow(gaussian, rgba(77, 182, 172, 0.35), 14, 0.35, 0, 0);
 }
 
 .check-box {
-    -fx-text-fill: #334155;
+    -fx-text-fill: rgba(15, 23, 42, 0.75);
     -fx-font-size: 12.5px;
+    -fx-font-weight: 600;
 }
 
-.role-radio {
-    -fx-text-fill: #0F172A;
+.radio-button {
+    -fx-text-fill: rgba(14, 58, 74, 0.85);
     -fx-font-size: 13px;
-    -fx-font-weight: 700;
+    -fx-font-weight: 800;
 }
 
 .radio-button .radio {
-    -fx-mark-color: #2563EB;
+    -fx-mark-color: #4DB6AC;
 }
 
-.primary-btn {
-    -fx-background-color: linear-gradient(to right, #2563EB, #06B6D4);
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: 800;
-    -fx-padding: 12 18;
-    -fx-background-radius: 14;
+.button {
+    -fx-background-radius: 18;
+    -fx-background-color: linear-gradient(to right, #4DB6AC, #E6A38C);
+    -fx-text-fill: #0E3A4A;
+    -fx-font-size: 15px;
+    -fx-font-weight: 900;
+    -fx-padding: 12 30;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(14, 58, 74, 0.35), 18, 0.25, 0, 6);
 }
 
-.primary-btn:hover {
-    -fx-background-color: linear-gradient(to right, #1D4ED8, #0891B2);
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #3FA69D, #D8927B);
 }
 
-.primary-btn:pressed {
+.button:pressed {
     -fx-opacity: 0.92;
 }

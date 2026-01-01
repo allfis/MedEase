@@ -1,5 +1,6 @@
 package com.example.medeasedesktop;
 
+import com.example.medeasedesktop.dao.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ public class LoginController {
 
     @FXML
     private TextField showPasswordField;
+
     @FXML
     private CheckBox showPasswordCheck;
 
@@ -51,22 +53,31 @@ public class LoginController {
     @FXML
     void handleLogin(ActionEvent event) {
         String email = emailField.getText() == null ? "" : emailField.getText().trim();
-        String password = passwordField.isVisible()
-                ? passwordField.getText()
-                : showPasswordField.getText();
+        String password = passwordField.isVisible() ? passwordField.getText() : showPasswordField.getText();
 
         if (roleGroup.getSelectedToggle() == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a role (Doctor/Admin).").show();
             return;
         }
+
         if (email.isEmpty() || password == null || password.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Gmail and password are required.").show();
+            new Alert(Alert.AlertType.WARNING, "Email and password are required.").show();
             return;
         }
-        if (!email.endsWith("@gmail.com")) {
-            new Alert(Alert.AlertType.WARNING, "Enter a valid Gmail address.").show();
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)+$")) {
+            new Alert(Alert.AlertType.WARNING, "Enter a valid email address.").show();
             return;
         }
+        String role = adminRadio.isSelected() ? "ADMIN" : "DOCTOR";
+
+        UserDAO dao = new UserDAO();
+        if (!dao.authenticateAndLoad(role, email, password)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid credentials.").show();
+            return;
+        }
+
+
 
         String fxmlToLoad = adminRadio.isSelected() ? "admin_dashboard.fxml" : "doctor_dashboard.fxml";
 
@@ -76,7 +87,6 @@ public class LoginController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to open dashboard.").show();
         }
     }

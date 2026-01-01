@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="12"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.controller.ReviewsController"
+      styleClass="content-card">
+
+    <Label text="Patient Reviews" styleClass="h1"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Search by patient/doctor/comment..." HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="ratingFilter" promptText="Rating"/>
+        <Button text="Refresh" onAction="#refresh"/>
+    </HBox>
+
+    <TableView fx:id="reviewsTable" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="idCol" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="patientCol" text="Patient" prefWidth="180"/>
+            <TableColumn fx:id="doctorCol" text="Doctor" prefWidth="180"/>
+            <TableColumn fx:id="ratingCol" text="Rating" prefWidth="90"/>
+            <TableColumn fx:id="commentCol" text="Comment" prefWidth="260"/>
+            <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Delete Review" onAction="#deleteSelected"/>
+    </HBox>
+
+</VBox>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+
+<VBox spacing="12" styleClass="content-card"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+
+
+    <Label text="Appointment Approval" styleClass="h1"/>
+
+    <TableView prefHeight="300">
+        <columns>
+            <TableColumn text="Patient"/>
+            <TableColumn text="Date"/>
+            <TableColumn text="Time"/>
+            <TableColumn text="Doctor"/>
+            <TableColumn text="Status"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Approve"/>
+        <Button text="Reject"/>
+        <Button text="Assign Doctor"/>
+        <Button text="Cancel"/>
+    </HBox>
+</VBox>

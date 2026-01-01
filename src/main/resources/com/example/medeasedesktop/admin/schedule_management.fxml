@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+<VBox spacing="12" styleClass="content-card"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+
+    <Label text="Schedule Management" styleClass="h1"/>
+
+    <TableView prefHeight="300">
+        <columns>
+            <TableColumn text="Doctor"/>
+            <TableColumn text="Date"/>
+            <TableColumn text="Availability"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Set Working Hours"/>
+        <Button text="Mark Leave"/>
+        <Button text="Block Holiday"/>
+    </HBox>
+</VBox>

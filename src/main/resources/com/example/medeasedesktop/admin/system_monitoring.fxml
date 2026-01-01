@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="14"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="content-card">
+
+    <VBox spacing="4">
+        <Label text="System Monitoring" styleClass="h1"/>
+        <Label text="Daily overview of appointments and basic system stats." styleClass="muted"/>
+    </VBox>
+
+    <GridPane hgap="12" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="33"/>
+            <ColumnConstraints percentWidth="33"/>
+            <ColumnConstraints percentWidth="33"/>
+        </columnConstraints>
+
+        <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="stat-card">
+            <Label text="Today’s Appointments" styleClass="stat-title"/>
+            <Label text="0" styleClass="stat-value"/>
+            <Label text="Total requests received today" styleClass="stat-sub"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="stat-card">
+            <Label text="Approved" styleClass="stat-title"/>
+            <Label text="0" styleClass="stat-value"/>
+            <Label text="Confirmed bookings" styleClass="stat-sub"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="stat-card">
+            <Label text="Rejected / Cancelled" styleClass="stat-title"/>
+            <Label text="0" styleClass="stat-value"/>
+            <Label text="Not going forward" styleClass="stat-sub"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="stat-card">
+            <Label text="Active Doctors" styleClass="stat-title"/>
+            <Label text="0" styleClass="stat-value"/>
+            <Label text="Enabled doctor accounts" styleClass="stat-sub"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="stat-card">
+            <Label text="On Leave Today" styleClass="stat-title"/>
+            <Label text="0" styleClass="stat-value"/>
+            <Label text="Doctors unavailable today" styleClass="stat-sub"/>
+        </VBox>
+
+        <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="2" styleClass="stat-card">
+            <Label text="New Reviews" styleClass="stat-title"/>
+            <Label text="0" styleClass="stat-value"/>
+            <Label text="Feedback submitted today" styleClass="stat-sub"/>
+        </VBox>
+    </GridPane>
+
+    <Separator/>
+
+    <VBox spacing="10">
+        <Label text="Recent Activity" styleClass="stat-title"/>
+        <TableView prefHeight="220">
+            <columns>
+                <TableColumn text="Time"/>
+                <TableColumn text="Event"/>
+                <TableColumn text="User"/>
+                <TableColumn text="Details"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</VBox>
