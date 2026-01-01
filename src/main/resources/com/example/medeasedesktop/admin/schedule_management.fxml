@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.layout.HBox?>
-<VBox spacing="12" styleClass="content-card"
-      xmlns="http://javafx.com/javafx/25"
-      xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.ScheduleManagementController"
+      spacing="12">
 
+    <padding>
+        <Insets top="12" right="12" bottom="12" left="12"/>
+    </padding>
 
-    <Label text="Schedule Management" styleClass="h1"/>
+    <Label text="Schedule Management"/>
 
-    <TableView prefHeight="300">
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Doctor:"/>
+        <ComboBox fx:id="doctorCombo" prefWidth="280"/>
+
+        <Label text="Day:"/>
+        <ComboBox fx:id="dayCombo" prefWidth="160"/>
+
+        <Label text="Type:"/>
+        <ComboBox fx:id="typeCombo" prefWidth="140"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Start:"/>
+        <TextField fx:id="startField" promptText="09:00" prefWidth="90"/>
+
+        <Label text="End:"/>
+        <TextField fx:id="endField" promptText="17:00" prefWidth="90"/>
+
+        <Button text="Add" onAction="#onAdd"/>
+        <Button text="Update Selected" onAction="#onUpdateSelected"/>
+        <Button text="Delete Selected" onAction="#onDeleteSelected"/>
+        <Button text="Refresh" onAction="#onRefresh"/>
+    </HBox>
+
+    <TableView fx:id="table" prefHeight="320">
         <columns>
-            <TableColumn text="Doctor"/>
-            <TableColumn text="Date"/>
-            <TableColumn text="Availability"/>
+            <TableColumn fx:id="colDoctor" text="Doctor" prefWidth="240"/>
+            <TableColumn fx:id="colDay" text="Day" prefWidth="120"/>
+            <TableColumn fx:id="colStart" text="Start" prefWidth="90"/>
+            <TableColumn fx:id="colEnd" text="End" prefWidth="90"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="120"/>
+            <TableColumn fx:id="colCreated" text="Created" prefWidth="170"/>
         </columns>
     </TableView>
 
-    <HBox spacing="10">
-        <Button text="Set Working Hours"/>
-        <Button text="Mark Leave"/>
-        <Button text="Block Holiday"/>
-    </HBox>
 </VBox>

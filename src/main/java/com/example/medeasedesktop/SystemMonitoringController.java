@@ -19,8 +19,6 @@ public class SystemMonitoringController {
     @FXML private Label onLeaveLabel;
     @FXML private Label newReviewsLabel;
 
-    @FXML private Label statusLabel;
-
     @FXML private TableView<ActivityRow> activityTable;
     @FXML private TableColumn<ActivityRow, String> timeCol;
     @FXML private TableColumn<ActivityRow, String> eventCol;
@@ -41,13 +39,14 @@ public class SystemMonitoringController {
     @FXML
     public void refresh() {
         SystemStats s = dao.loadStats();
+
         todayAppointmentsLabel.setText(String.valueOf(s.getTodayAppointments()));
         approvedLabel.setText(String.valueOf(s.getApproved()));
         rejectedCancelledLabel.setText(String.valueOf(s.getRejectedOrCancelled()));
         activeDoctorsLabel.setText(String.valueOf(s.getActiveDoctors()));
         onLeaveLabel.setText(String.valueOf(s.getOnLeaveToday()));
         newReviewsLabel.setText(String.valueOf(s.getNewReviewsToday()));
+
         activityTable.setItems(FXCollections.observableArrayList(dao.recentActivity(30)));
-        statusLabel.setText("Last updated: " + s.getGeneratedAt());
     }
 }

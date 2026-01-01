@@ -2,42 +2,33 @@ package com.example.medeasedesktop.model;
 
 public class ReviewRow {
     private final int id;
-    private final String patient;
-    private final String doctor;
+    private final int doctorId;
+    private final int patientId;
+    private final String doctorName;
+    private final String patientName;
     private final int rating;
     private final String comment;
-    private final String date;
+    private final String createdAt;
 
-    public ReviewRow(int id, String patient, String doctor, int rating, String comment, String date) {
+    public ReviewRow(int id, int doctorId, int patientId,
+                     String doctorName, String patientName,
+                     int rating, String comment, String createdAt) {
         this.id = id;
-        this.patient = patient;
-        this.doctor = doctor;
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+        this.doctorName = doctorName;
+        this.patientName = patientName;
         this.rating = rating;
         this.comment = comment;
-        this.date = date;
+        this.createdAt = createdAt;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getPatient() {
-        return patient;
-    }
-
-    public String getDoctor() {
-        return doctor;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String getDate() {
-        return date;
-    }
+    public int getId() { return id; }
+    public int getDoctorId() { return doctorId; }
+    public int getPatientId() { return patientId; }
+    public String getDoctorName() { return doctorName; }
+    public String getPatientName() { return patientName; }
+    public int getRating() { return rating; }
+    public String getComment() { return comment; }
+    public String getCreatedAt() { return createdAt; }
 }

@@ -31,4 +31,6 @@ public final class Session {
     public static String getFullName() {
         return fullName;
     }
+
+
 }

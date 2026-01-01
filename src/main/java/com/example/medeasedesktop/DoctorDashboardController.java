@@ -40,7 +40,7 @@ public class DoctorDashboardController {
 
     @FXML
     void showPatientProfile(ActionEvent event) {
-        loadView("shared/patient_search.fxml");
+        loadView("shared/patient_records.fxml");
     }
 
     @FXML

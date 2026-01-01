@@ -11,93 +11,121 @@ import java.util.List;
 
 public class ReviewsDAO {
 
-    public List<ReviewRow> list(String q, Integer ratingFilter) {
-        List<ReviewRow> list = new ArrayList<>();
+    public static class DoctorItem {
+        public final int id;
+        public final String label;
 
-        String where = " WHERE 1=1 ";
-        String like = null;
-
-        if (q != null && !q.trim().isEmpty()) {
-            where += " AND (lower(p.full_name) LIKE ? OR lower(COALESCE(u.full_name,'')) LIKE ? OR lower(COALESCE(r.comment,'')) LIKE ?) ";
-            like = "%" + q.trim().toLowerCase() + "%";
+        public DoctorItem(int id, String label) {
+            this.id = id;
+            this.label = label;
         }
 
-        if (ratingFilter != null) {
-            where += " AND r.rating=? ";
+        @Override
+        public String toString() {
+            return label;
         }
+    }
 
+    public List<DoctorItem> getDoctors() {
         String sql = """
-            SELECT r.id AS id,
-                   p.full_name AS patient,
-                   COALESCE(u.full_name,'Doctor') AS doctor,
-                   r.rating AS rating,
-                   COALESCE(r.comment,'') AS comment,
-                   strftime('%Y-%m-%d', r.created_at) AS created_at
-            FROM reviews r
-            JOIN patients p ON p.id=r.patient_id
-            JOIN users u ON u.id=r.doctor_id
-        """ + where + " ORDER BY r.id DESC";
+            SELECT id, full_name, email
+            FROM users
+            WHERE role='DOCTOR' AND enabled=1
+            ORDER BY full_name
+        """;
 
-        try (Connection c = DB.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            int idx = 1;
+        List<DoctorItem> list = new ArrayList<>();
 
-            if (like != null) {
-                ps.setString(idx++, like);
-                ps.setString(idx++, like);
-                ps.setString(idx++, like);
+        try (Connection c = DB.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("full_name");
+                String email = rs.getString("email");
+                String label = (name != null && !name.isBlank()) ? name : email;
+                list.add(new DoctorItem(id, label));
             }
-            if (ratingFilter != null) {
-                ps.setInt(idx++, ratingFilter);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
+
+    public List<ReviewRow> getReviews(Integer doctorId, Integer minRating) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("""
+            SELECT r.id, r.doctor_id, r.patient_id, r.rating, r.comment, r.created_at,
+                   u.full_name AS doctor_name, u.email AS doctor_email,
+                   p.full_name AS patient_name
+            FROM reviews r
+            JOIN users u ON u.id = r.doctor_id
+            JOIN patients p ON p.id = r.patient_id
+            WHERE 1=1
+        """);
+
+        List<Object> params = new ArrayList<>();
+
+        if (doctorId != null) {
+            sb.append(" AND r.doctor_id=?");
+            params.add(doctorId);
+        }
+        if (minRating != null) {
+            sb.append(" AND r.rating>=?");
+            params.add(minRating);
+        }
+
+        sb.append(" ORDER BY r.created_at DESC");
+
+        List<ReviewRow> out = new ArrayList<>();
+
+        try (Connection c = DB.getConnection();
+             PreparedStatement ps = c.prepareStatement(sb.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
             }
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    list.add(new ReviewRow(
+                    String doctorName = rs.getString("doctor_name");
+                    String doctorEmail = rs.getString("doctor_email");
+                    String d = (doctorName != null && !doctorName.isBlank()) ? doctorName : doctorEmail;
+
+                    out.add(new ReviewRow(
                             rs.getInt("id"),
-                            rs.getString("patient"),
-                            rs.getString("doctor"),
+                            rs.getInt("doctor_id"),
+                            rs.getInt("patient_id"),
+                            d,
+                            rs.getString("patient_name"),
                             rs.getInt("rating"),
                             rs.getString("comment"),
                             rs.getString("created_at")
                     ));
                 }
             }
+
         } catch (Exception e) {
-            return list;
+            throw new RuntimeException(e);
         }
 
-        return list;
+        return out;
     }
 
-    public boolean deleteReview(int reviewId, String actorRole, String actorEmail) {
-        String del = "DELETE FROM reviews WHERE id=?";
-        String log = "INSERT INTO activity_log(event, actor_role, actor_email, details) VALUES(?,?,?,?)";
+    public void deleteReview(int reviewId) {
+        String sql = "DELETE FROM reviews WHERE id=?";
 
-        try (Connection c = DB.getConnection()) {
-            c.setAutoCommit(false);
+        try (Connection c = DB.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
 
-            try (PreparedStatement ps = c.prepareStatement(del);
-                 PreparedStatement lg = c.prepareStatement(log)) {
+            ps.setInt(1, reviewId);
+            ps.executeUpdate();
 
-                ps.setInt(1, reviewId);
-                int a = ps.executeUpdate();
-
-                lg.setString(1, "REVIEW_DELETED");
-                lg.setString(2, actorRole);
-                lg.setString(3, actorEmail);
-                lg.setString(4, "Deleted review #" + reviewId);
-                lg.executeUpdate();
-
-                c.commit();
-                return a == 1;
-            } catch (Exception ex) {
-                c.rollback();
-                return false;
-            } finally {
-                c.setAutoCommit(true);
-            }
         } catch (Exception e) {
-            return false;
+            throw new RuntimeException(e);
         }
     }
 }

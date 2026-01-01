@@ -1,78 +1,103 @@
 package com.example.medeasedesktop;
 
-import com.example.medeasedesktop.Session;
 import com.example.medeasedesktop.dao.ReviewsDAO;
 import com.example.medeasedesktop.model.ReviewRow;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.util.List;
+
 public class ReviewsController {
 
-    @FXML private TextField searchField;
-    @FXML private ComboBox<String> ratingFilter;
+    @FXML private ComboBox<ReviewsDAO.DoctorItem> doctorCombo;
+    @FXML private ComboBox<Integer> minRatingCombo;
 
-    @FXML private TableView<ReviewRow> reviewsTable;
-    @FXML private TableColumn<ReviewRow, Integer> idCol;
-    @FXML private TableColumn<ReviewRow, String> patientCol;
-    @FXML private TableColumn<ReviewRow, String> doctorCol;
-    @FXML private TableColumn<ReviewRow, Integer> ratingCol;
-    @FXML private TableColumn<ReviewRow, String> commentCol;
-    @FXML private TableColumn<ReviewRow, String> dateCol;
+    @FXML private TableView<ReviewRow> table;
+    @FXML private TableColumn<ReviewRow, String> colDoctor;
+    @FXML private TableColumn<ReviewRow, String> colPatient;
+    @FXML private TableColumn<ReviewRow, String> colRating;
+    @FXML private TableColumn<ReviewRow, String> colComment;
+    @FXML private TableColumn<ReviewRow, String> colCreated;
 
     private final ReviewsDAO dao = new ReviewsDAO();
 
     @FXML
     public void initialize() {
-        idCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("id"));
-        patientCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("patient"));
-        doctorCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("doctor"));
-        ratingCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("rating"));
-        commentCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("comment"));
-        dateCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("date"));
 
-        ratingFilter.setItems(FXCollections.observableArrayList("All", "1", "2", "3", "4", "5"));
-        ratingFilter.getSelectionModel().select("All");
+        minRatingCombo.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
+        minRatingCombo.getSelectionModel().select(Integer.valueOf(1));
 
-        searchField.textProperty().addListener((a,b,c) -> refresh());
-        ratingFilter.valueProperty().addListener((a,b,c) -> refresh());
+        colDoctor.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getDoctorName()));
+        colPatient.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getPatientName()));
+        colRating.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(String.valueOf(c.getValue().getRating())));
+        colComment.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(safe(c.getValue().getComment())));
+        colCreated.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getCreatedAt()));
 
-        refresh();
+        loadDoctors();
+        refresh(null, null);
     }
 
     @FXML
-    void refresh() {
-        Integer r = null;
-        String v = ratingFilter.getValue();
-        if (v != null && !"All".equalsIgnoreCase(v)) {
-            try { r = Integer.parseInt(v); } catch (Exception ignored) {}
-        }
+    private void onFilter() {
+        Integer doctorId = null;
+        ReviewsDAO.DoctorItem doc = doctorCombo.getValue();
+        if (doc != null && doc.id != -1) doctorId = doc.id;
 
-        reviewsTable.setItems(FXCollections.observableArrayList(
-                dao.list(searchField.getText(), r)
-        ));
+        Integer minRating = minRatingCombo.getValue();
+        refresh(doctorId, minRating);
     }
 
     @FXML
-    void deleteSelected() {
-        if (!"ADMIN".equalsIgnoreCase(Session.getRole())) {
-            new Alert(Alert.AlertType.WARNING, "Only Admin can delete reviews.").show();
+    private void onReset() {
+        if (doctorCombo.getItems() != null && !doctorCombo.getItems().isEmpty()) {
+            doctorCombo.getSelectionModel().select(0);
+        }
+        minRatingCombo.getSelectionModel().select(Integer.valueOf(1));
+        refresh(null, null);
+    }
+
+    @FXML
+    private void onRefresh() {
+        onFilter();
+    }
+
+    @FXML
+    private void onDeleteSelected() {
+        ReviewRow selected = table.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            warn("Select a review to delete.");
             return;
         }
 
-        ReviewRow row = reviewsTable.getSelectionModel().getSelectedItem();
-        if (row == null) {
-            new Alert(Alert.AlertType.WARNING, "Select a review first.").show();
-            return;
-        }
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                "Delete this review?\nThis cannot be undone.",
+                ButtonType.YES, ButtonType.NO);
+        confirm.setHeaderText(null);
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Delete this review?", ButtonType.YES, ButtonType.NO);
-        confirm.showAndWait().ifPresent(bt -> {
-            if (bt != ButtonType.YES) return;
+        if (confirm.showAndWait().orElse(ButtonType.NO) != ButtonType.YES) return;
 
-            boolean ok = dao.deleteReview(row.getId(), Session.getRole(), Session.getEmail());
-            if (!ok) new Alert(Alert.AlertType.ERROR, "Failed to delete review.").show();
-            refresh();
-        });
+        dao.deleteReview(selected.getId());
+        onFilter();
+    }
+
+    private void loadDoctors() {
+        List<ReviewsDAO.DoctorItem> doctors = dao.getDoctors();
+        doctors.add(0, new ReviewsDAO.DoctorItem(-1, "All Doctors"));
+        doctorCombo.setItems(FXCollections.observableArrayList(doctors));
+        doctorCombo.getSelectionModel().select(0);
+    }
+
+    private void refresh(Integer doctorId, Integer minRating) {
+        List<ReviewRow> rows = dao.getReviews(doctorId, minRating);
+        table.setItems(FXCollections.observableArrayList(rows));
+    }
+
+    private String safe(String s) {
+        return (s == null) ? "" : s;
+    }
+
+    private void warn(String msg) {
+        new Alert(Alert.AlertType.WARNING, msg, ButtonType.OK).showAndWait();
     }
 }

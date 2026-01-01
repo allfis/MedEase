@@ -38,7 +38,7 @@ public class AdminDashboardController {
 
     @FXML
     void viewPatients(ActionEvent e) {
-        loadView("shared/patient_search.fxml");
+        loadView("shared/patient_records.fxml");
     }
 
     @FXML

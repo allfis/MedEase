@@ -1,0 +1,80 @@
+.content-card {
+    -fx-padding: 18;
+    -fx-spacing: 14;
+    -fx-background-color: rgba(248, 250, 249, 0.97);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(14, 58, 74, 0.15);
+    -fx-effect: dropshadow(gaussian, rgba(2, 6, 23, 0.28), 28, 0.22, 0, 10);
+}
+
+.h1 {
+    -fx-font-size: 20px;
+    -fx-font-weight: 900;
+    -fx-text-fill: linear-gradient(to right, #4DB6AC, #E6A38C);
+}
+
+.muted {
+    -fx-text-fill: rgba(15, 23, 42, 0.6);
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 600;
+}
+
+.stat-card {
+    -fx-padding: 14;
+    -fx-spacing: 6;
+    -fx-background-color: #F1F5F4;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(14, 58, 74, 0.18);
+}
+
+.stat-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(14, 58, 74, 0.85);
+}
+
+.stat-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #0E3A4A;
+}
+
+#statusLabel {
+    -fx-text-fill: #4DB6AC;
+    -fx-font-weight: 800;
+    -fx-font-size: 12.5px;
+}
+
+.separator {
+    -fx-padding: 10 0 10 0;
+}
+
+.table-view {
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: rgba(14, 58, 74, 0.18);
+    -fx-background-color: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #EAF1EF;
+    -fx-background-radius: 14 14 0 0;
+}
+
+.table-view .column-header {
+    -fx-font-size: 12px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0E3A4A;
+}
+
+.table-view .cell {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #0F172A;
+    -fx-padding: 8 10 8 10;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(77, 182, 172, 0.25);
+}

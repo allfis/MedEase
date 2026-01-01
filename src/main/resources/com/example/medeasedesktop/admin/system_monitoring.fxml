@@ -1,78 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox spacing="14"
+<VBox spacing="16"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.medeasedesktop.SystemMonitoringController"
-      styleClass="content-card">
+      fx:controller="com.example.medeasedesktop.SystemMonitoringController">
 
     <VBox spacing="4">
-        <Label text="System Monitoring" styleClass="h1"/>
-        <Label text="Daily overview of appointments and basic system stats." styleClass="muted"/>
+        <Label text="System Monitoring"/>
+        <Label text="Today overview + recent activity."/>
     </VBox>
 
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Button text="Refresh" onAction="#refresh"/>
-        <Label fx:id="statusLabel" text="" styleClass="muted"/>
+    <HBox spacing="16">
+        <VBox spacing="6" prefWidth="180"
+              style="-fx-border-color:#cccccc; -fx-border-radius:6; -fx-padding:12;">
+            <Label text="Today Appointments"/>
+            <Label fx:id="todayAppointmentsLabel" text="0"/>
+        </VBox>
+
+        <VBox spacing="6" prefWidth="180"
+              style="-fx-border-color:#cccccc; -fx-border-radius:6; -fx-padding:12;">
+            <Label text="Approved"/>
+            <Label fx:id="approvedLabel" text="0"/>
+        </VBox>
+
+        <VBox spacing="6" prefWidth="180"
+              style="-fx-border-color:#cccccc; -fx-border-radius:6; -fx-padding:12;">
+            <Label text="Rejected / Cancelled"/>
+            <Label fx:id="rejectedCancelledLabel" text="0"/>
+        </VBox>
     </HBox>
 
-    <GridPane hgap="12" vgap="12">
-        <columnConstraints>
-            <ColumnConstraints percentWidth="33"/>
-            <ColumnConstraints percentWidth="33"/>
-            <ColumnConstraints percentWidth="33"/>
-        </columnConstraints>
-
-        <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="stat-card">
-            <Label text="Today’s Appointments" styleClass="stat-title"/>
-            <Label fx:id="todayAppointmentsLabel" text="0" styleClass="stat-value"/>
-            <Label text="Total requests for today" styleClass="stat-sub"/>
+    <HBox spacing="16">
+        <VBox spacing="6" prefWidth="180"
+              style="-fx-border-color:#cccccc; -fx-border-radius:6; -fx-padding:12;">
+            <Label text="Active Doctors"/>
+            <Label fx:id="activeDoctorsLabel" text="0"/>
         </VBox>
 
-        <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="stat-card">
-            <Label text="Approved" styleClass="stat-title"/>
-            <Label fx:id="approvedLabel" text="0" styleClass="stat-value"/>
-            <Label text="Confirmed bookings" styleClass="stat-sub"/>
+        <VBox spacing="6" prefWidth="180"
+              style="-fx-border-color:#cccccc; -fx-border-radius:6; -fx-padding:12;">
+            <Label text="On Leave Today"/>
+            <Label fx:id="onLeaveLabel" text="0"/>
         </VBox>
 
-        <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="stat-card">
-            <Label text="Rejected / Cancelled" styleClass="stat-title"/>
-            <Label fx:id="rejectedCancelledLabel" text="0" styleClass="stat-value"/>
-            <Label text="Not going forward" styleClass="stat-sub"/>
+        <VBox spacing="6" prefWidth="180"
+              style="-fx-border-color:#cccccc; -fx-border-radius:6; -fx-padding:12;">
+            <Label text="New Reviews"/>
+            <Label fx:id="newReviewsLabel" text="0"/>
         </VBox>
-
-        <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="stat-card">
-            <Label text="Active Doctors" styleClass="stat-title"/>
-            <Label fx:id="activeDoctorsLabel" text="0" styleClass="stat-value"/>
-            <Label text="Enabled doctor accounts" styleClass="stat-sub"/>
-        </VBox>
-
-        <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="stat-card">
-            <Label text="On Leave Today" styleClass="stat-title"/>
-            <Label fx:id="onLeaveLabel" text="0" styleClass="stat-value"/>
-            <Label text="Doctors unavailable today" styleClass="stat-sub"/>
-        </VBox>
-
-        <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="2" styleClass="stat-card">
-            <Label text="New Reviews" styleClass="stat-title"/>
-            <Label fx:id="newReviewsLabel" text="0" styleClass="stat-value"/>
-            <Label text="Feedback submitted today" styleClass="stat-sub"/>
-        </VBox>
-    </GridPane>
+    </HBox>
 
     <Separator/>
 
-    <VBox spacing="10">
-        <Label text="Recent Activity" styleClass="stat-title"/>
+    <VBox spacing="8">
+        <Label text="Recent Activity"/>
+
         <TableView fx:id="activityTable" prefHeight="240">
             <columns>
-                <TableColumn fx:id="timeCol" text="Time" prefWidth="170"/>
-                <TableColumn fx:id="eventCol" text="Event" prefWidth="200"/>
-                <TableColumn fx:id="userCol" text="User" prefWidth="220"/>
-                <TableColumn fx:id="detailsCol" text="Details" prefWidth="320"/>
+                <TableColumn fx:id="timeCol" prefWidth="170" text="Time"/>
+                <TableColumn fx:id="eventCol" prefWidth="200" text="Event"/>
+                <TableColumn fx:id="userCol" prefWidth="220" text="User"/>
+                <TableColumn fx:id="detailsCol" prefWidth="320" text="Details"/>
             </columns>
         </TableView>
     </VBox>

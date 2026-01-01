@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="12"
-      xmlns="http://javafx.com/javafx/21"
+<VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.medeasedesktop.ReviewsController"
-      styleClass="content-card">
+      spacing="12">
 
-    <Label text="Patient Reviews" styleClass="h1"/>
+    <padding>
+        <Insets top="12" right="12" bottom="12" left="12"/>
+    </padding>
+
+    <Label text="Reviews"/>
 
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="searchField" promptText="Search by patient/doctor/comment..." HBox.hgrow="ALWAYS"/>
-        <ComboBox fx:id="ratingFilter" promptText="Rating"/>
-        <Button text="Refresh" onAction="#refresh"/>
+        <Label text="Doctor:"/>
+        <ComboBox fx:id="doctorCombo" prefWidth="240"/>
+
+        <Label text="Min Rating:"/>
+        <ComboBox fx:id="minRatingCombo" prefWidth="120"/>
+
+        <Button text="Filter" onAction="#onFilter"/>
+        <Button text="Reset" onAction="#onReset"/>
+        <Button text="Refresh" onAction="#onRefresh"/>
     </HBox>
 
-    <TableView fx:id="reviewsTable" prefHeight="300">
+    <TableView fx:id="table" prefHeight="340">
         <columns>
-            <TableColumn fx:id="idCol" text="ID" prefWidth="60"/>
-            <TableColumn fx:id="patientCol" text="Patient" prefWidth="180"/>
-            <TableColumn fx:id="doctorCol" text="Doctor" prefWidth="180"/>
-            <TableColumn fx:id="ratingCol" text="Rating" prefWidth="90"/>
-            <TableColumn fx:id="commentCol" text="Comment" prefWidth="260"/>
-            <TableColumn fx:id="dateCol" text="Date" prefWidth="120"/>
+            <TableColumn fx:id="colDoctor" text="Doctor" prefWidth="180"/>
+            <TableColumn fx:id="colPatient" text="Patient" prefWidth="180"/>
+            <TableColumn fx:id="colRating" text="Rating" prefWidth="80"/>
+            <TableColumn fx:id="colComment" text="Comment" prefWidth="360"/>
+            <TableColumn fx:id="colCreated" text="Created" prefWidth="170"/>
         </columns>
     </TableView>
 
-    <HBox spacing="10">
-        <Button text="Delete Review" onAction="#deleteSelected"/>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Delete Selected" onAction="#onDeleteSelected"/>
     </HBox>
 
 </VBox>
