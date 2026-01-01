@@ -15,7 +15,8 @@ public final class DB {
         try {
             Path dbPath = Paths.get(System.getProperty("user.home"), "medease.db");
             Files.createDirectories(dbPath.getParent());
-            URL = "jdbc:sqlite:" + dbPath.toString();
+            URL = "jdbc:sqlite:" + dbPath;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
