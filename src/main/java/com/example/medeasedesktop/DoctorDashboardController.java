@@ -48,10 +48,6 @@ public class DoctorDashboardController {
         loadView("doctor/queue_view.fxml");
     }
 
-    @FXML
-    void showPrescriptions(ActionEvent event) {
-        loadView("doctor/prescriptions.fxml");
-    }
 
     @FXML
     void showMyProfile(ActionEvent event) {
@@ -60,7 +56,8 @@ public class DoctorDashboardController {
 
     private void loadView(String path) {
         try {
-            Node view = FXMLLoader.load(getClass().getResource(path));
+            String abs = "/com/example/medeasedesktop/" + path; // <-- key
+            Node view = FXMLLoader.load(getClass().getResource(abs));
             contentHolder.setCenter(view);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -68,10 +65,11 @@ public class DoctorDashboardController {
         }
     }
 
+
     @FXML
     void handleLogout(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/medeasedesktop/login.fxml"));
             Stage stage = getStageFromEvent(event);
             stage.setScene(new Scene(root));
             stage.show();

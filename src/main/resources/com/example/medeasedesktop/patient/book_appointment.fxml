@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.patient.BookAppointmentController"
+      spacing="14" styleClass="content-card">
+
+    <Label text="Book Appointment" styleClass="h1"/>
+
+    <DatePicker fx:id="datePicker"/>
+    <TextField fx:id="timeField" promptText="Time (e.g. 10:30)"/>
+
+    <Button text="Confirm Appointment" onAction="#book"/>
+    <Label fx:id="statusLabel"/>
+
+</VBox>

@@ -24,7 +24,6 @@ public class AdminDashboardController {
     @FXML
     public void initialize() {
         adminNameLabel.setText(Session.getFullName() == null ? "Admin" : Session.getFullName());
-        contentHolder.getScene();
         contentHolder.getStylesheets().add(getClass().getResource("css/dashboard.css").toExternalForm());
         loadView("shared/dashboard.fxml");
     }
@@ -65,10 +64,15 @@ public class AdminDashboardController {
     void viewMonitoring(ActionEvent e) {
         loadView("admin/system_monitoring.fxml");
     }
+    @FXML
+    void viewApproval(ActionEvent e) {
+        loadView("admin/appointment_approval.fxml");
+    }
 
     private void loadView(String path) {
         try {
-            Node view = FXMLLoader.load(getClass().getResource(path));
+            String abs = "/com/example/medeasedesktop/" + path; // <-- key
+            Node view = FXMLLoader.load(getClass().getResource(abs));
             contentHolder.setCenter(view);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -77,10 +81,11 @@ public class AdminDashboardController {
     }
 
 
+
     @FXML
     void handleLogout(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/medeasedesktop/login.fxml"));
             Stage stage = getStageFromEvent(event);
             stage.setScene(new Scene(root));
             stage.show();

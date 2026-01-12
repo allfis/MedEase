@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.*?>
 
 <VBox spacing="12" styleClass="content-card"
       xmlns="http://javafx.com/javafx/25"
-      xmlns:fx="http://javafx.com/fxml/1">
-
-
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.admin.AppointmentApprovalController">
 
     <Label text="Appointment Approval" styleClass="h1"/>
 
-    <TableView prefHeight="300">
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Refresh" onAction="#refresh"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="statusLabel" text="" styleClass="muted"/>
+    </HBox>
+
+    <TableView fx:id="table" prefHeight="360">
         <columns>
-            <TableColumn text="Patient"/>
-            <TableColumn text="Date"/>
-            <TableColumn text="Time"/>
-            <TableColumn text="Doctor"/>
-            <TableColumn text="Status"/>
+            <TableColumn fx:id="idCol" text="ID" prefWidth="70"/>
+            <TableColumn fx:id="patientCol" text="Patient" prefWidth="200"/>
+            <TableColumn fx:id="dateCol" text="Date" prefWidth="130"/>
+            <TableColumn fx:id="timeCol" text="Time" prefWidth="110"/>
+            <TableColumn fx:id="doctorCol" text="Doctor" prefWidth="200"/>
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="140"/>
         </columns>
     </TableView>
 
     <HBox spacing="10">
-        <Button text="Approve"/>
-        <Button text="Reject"/>
-        <Button text="Assign Doctor"/>
-        <Button text="Cancel"/>
+        <Button text="Approve" onAction="#approveSelected"/>
+        <Button text="Reject" onAction="#rejectSelected"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Label text="Assign Doctor:"/>
+        <ComboBox fx:id="doctorCombo" prefWidth="220"/>
+        <Button text="Assign" onAction="#assignDoctorToSelected"/>
     </HBox>
+
 </VBox>

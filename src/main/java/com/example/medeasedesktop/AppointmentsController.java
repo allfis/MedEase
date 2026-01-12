@@ -23,8 +23,8 @@ public class AppointmentsController {
     @FXML
     public void initialize() {
         patientCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("patient"));
-        dateCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("date"));
-        timeCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("time"));
+        dateCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("appdate"));
+        timeCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("apptime"));
         doctorCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("doctor"));
         statusCol.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("status"));
         refresh();

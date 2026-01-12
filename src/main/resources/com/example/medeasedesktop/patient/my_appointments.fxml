@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.MyAppointmentsController"
+      spacing="12" styleClass="content-card">
+
+    <VBox spacing="2">
+        <Label text="My Appointments" styleClass="h1"/>
+        <Label text="Shows your appointment status (PENDING/APPROVED/etc.)." styleClass="muted"/>
+    </VBox>
+
+    <HBox spacing="10">
+        <Button text="Refresh" onAction="#refresh"/>
+        <Label fx:id="statusLabel" text="" styleClass="muted"/>
+    </HBox>
+
+    <TableView fx:id="table" prefHeight="380">
+        <columns>
+            <TableColumn fx:id="dateCol" text="Date" prefWidth="170"/>
+            <TableColumn fx:id="timeCol" text="Time" prefWidth="140"/>
+            <TableColumn fx:id="doctorCol" text="Doctor" prefWidth="260"/>
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+</VBox>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.EmergencyController"
+      spacing="12" styleClass="content-card">
+
+    <VBox spacing="2">
+        <Label text="Emergency" styleClass="h1"/>
+        <Label text="Currently available doctors (based on schedule)." styleClass="muted"/>
+    </VBox>
+
+    <HBox spacing="10">
+        <Button text="Refresh" onAction="#refresh"/>
+        <Label fx:id="statusLabel" text="" styleClass="muted"/>
+    </HBox>
+
+    <TableView fx:id="table" prefHeight="380">
+        <columns>
+            <TableColumn fx:id="nameCol" text="Doctor" prefWidth="220"/>
+            <TableColumn fx:id="specialtyCol" text="Specialty" prefWidth="200"/>
+            <TableColumn fx:id="hospitalCol" text="Hospital" prefWidth="220"/>
+            <TableColumn fx:id="emailCol" text="Email" prefWidth="240"/>
+        </columns>
+    </TableView>
+
+</VBox>

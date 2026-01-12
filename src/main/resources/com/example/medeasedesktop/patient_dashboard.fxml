@@ -7,21 +7,20 @@
 <BorderPane prefHeight="620.0" prefWidth="900.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.medeasedesktop.DoctorDashboardController"
+            fx:controller="com.example.medeasedesktop.PatientDashboardController"
             styleClass="dash-root">
 
     <stylesheets>
-        <URL value="@css/doctordashboard.css"/>
+        <URL value="@css/admindashboard.css"/>
     </stylesheets>
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="12" styleClass="topbar">
             <Label text="MedEase" styleClass="topbar-title"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="doctorNameLabel" text="Doctor" styleClass="topbar-user"/>
+            <Label fx:id="patientNameLabel" text="Patient" styleClass="topbar-user"/>
             <MenuButton text="Menu" styleClass="topbar-menu">
                 <items>
-                    <MenuItem text="About" onAction="#handleAbout"/>
                     <MenuItem text="Logout" onAction="#handleLogout"/>
                     <MenuItem text="Exit" onAction="#handleExit"/>
                 </items>
@@ -31,13 +30,10 @@
 
     <left>
         <VBox spacing="10" styleClass="sidebar">
-            <Button maxWidth="Infinity" text="Dashboard" onAction="#showDashboard" styleClass="nav-btn"/>
-            <Button maxWidth="Infinity" text="Today’s Appointments" onAction="#showAppointments" styleClass="nav-btn"/>
-            <Button maxWidth="Infinity" text="Queue View" onAction="#showQueue" styleClass="nav-btn"/>
-            <Button maxWidth="Infinity" text="Patient Profile" onAction="#showPatientProfile" styleClass="nav-btn"/>
-            <Button maxWidth="Infinity" text="My Profile and Ratings" onAction="#showMyProfile" styleClass="nav-btn"/>
+            <Button maxWidth="Infinity" text="Search Doctors" onAction="#showSearch" styleClass="nav-btn"/>
+            <Button maxWidth="Infinity" text="My Appointments" onAction="#showMyAppointments" styleClass="nav-btn"/>
             <Region VBox.vgrow="ALWAYS"/>
-            <Label text="Doctor Workspace" styleClass="sidebar-foot"/>
+            <Label text="Patient Workspace" styleClass="sidebar-foot"/>
         </VBox>
     </left>
 

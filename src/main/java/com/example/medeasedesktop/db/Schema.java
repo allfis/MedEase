@@ -11,11 +11,25 @@ public final class Schema {
         String users = """
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            role TEXT NOT NULL CHECK(role IN ('ADMIN','DOCTOR')),
+            role TEXT NOT NULL CHECK(role IN ('ADMIN','DOCTOR','PATIENT')),
             email TEXT UNIQUE NOT NULL,
             password_hash TEXT NOT NULL,
             full_name TEXT,
             enabled INTEGER NOT NULL DEFAULT 1
+        );
+        """;
+
+        String patients = """
+        CREATE TABLE IF NOT EXISTS patients (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER UNIQUE,
+            full_name TEXT NOT NULL,
+            email TEXT,
+            phone TEXT,
+            dob TEXT,
+            gender TEXT,
+            address TEXT,
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
         );
         """;
 
@@ -26,20 +40,6 @@ public final class Schema {
             specialty TEXT,
             about TEXT,
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-        );
-        """
-
-                ;
-
-        String patients = """
-        CREATE TABLE IF NOT EXISTS patients (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            full_name TEXT NOT NULL,
-            email TEXT,
-            phone TEXT,
-            dob TEXT,
-            gender TEXT,
-            address TEXT
         );
         """;
 
@@ -112,33 +112,20 @@ public final class Schema {
         """;
 
         try (Connection c = DB.getConnection(); Statement s = c.createStatement()) {
+
             s.execute("PRAGMA foreign_keys = ON");
             s.execute("PRAGMA journal_mode = WAL");
 
             s.execute(users);
-            s.execute(doctorProfile);
             s.execute(patients);
+            s.execute(doctorProfile);
             s.execute(appointments);
             s.execute(schedule);
             s.execute(prescriptions);
             s.execute(reviews);
             s.execute(activityLog);
 
-            try { s.execute("ALTER TABLE users ADD COLUMN enabled INTEGER NOT NULL DEFAULT 1"); } catch (Exception ignored) {}
-            try { s.execute("ALTER TABLE appointments ADD COLUMN updated_at TEXT NOT NULL DEFAULT (datetime('now'))"); } catch (Exception ignored) {}
-
-            try {
-                s.execute("""
-INSERT OR IGNORE INTO users(role,email,password_hash,full_name,enabled)
-VALUES('ADMIN','admin@medease.com','11','Admin',1)
-""");
-
-                s.execute("""
-INSERT OR IGNORE INTO users(role,email,password_hash,full_name,enabled)
-VALUES('DOCTOR','doctor@medease.com','22','Doctor',1)
-""");
-
-            } catch (Exception ignored) {}
+            SeedDemoData.seed();
 
         } catch (Exception e) {
             e.printStackTrace();

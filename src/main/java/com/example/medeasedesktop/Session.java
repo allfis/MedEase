@@ -3,6 +3,7 @@ package com.example.medeasedesktop;
 public final class Session {
 
     private static int userId;
+    private static int patientId;
     private static String role;
     private static String email;
     private static String fullName;
@@ -14,10 +15,19 @@ public final class Session {
         role = r;
         email = e;
         fullName = name;
+        patientId = 0;
+    }
+
+    public static void setPatientId(int pid) {
+        patientId = pid;
     }
 
     public static int getUserId() {
         return userId;
+    }
+
+    public static int getPatientId() {
+        return patientId;
     }
 
     public static String getRole() {
@@ -31,6 +41,4 @@ public final class Session {
     public static String getFullName() {
         return fullName;
     }
-
-
 }

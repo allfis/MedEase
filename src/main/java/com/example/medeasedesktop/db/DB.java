@@ -26,10 +26,13 @@ public final class DB {
 
     public static Connection getConnection() throws SQLException {
         Connection c = DriverManager.getConnection(URL);
+        System.out.println("DB FILE = " + URL);
+
         try (Statement st = c.createStatement()) {
             st.execute("PRAGMA foreign_keys = ON");
             st.execute("PRAGMA journal_mode = WAL");
         }
         return c;
     }
+
 }

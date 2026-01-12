@@ -1,5 +1,6 @@
 package com.example.medeasedesktop;
 
+import com.example.medeasedesktop.dao.PatientDAO;
 import com.example.medeasedesktop.dao.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,26 +13,15 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    @FXML
-    private RadioButton doctorRadio;
+    @FXML private RadioButton doctorRadio;
+    @FXML private RadioButton adminRadio;
+    @FXML private RadioButton patientRadio;
+    @FXML private ToggleGroup roleGroup;
 
-    @FXML
-    private RadioButton adminRadio;
-
-    @FXML
-    private ToggleGroup roleGroup;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private TextField showPasswordField;
-
-    @FXML
-    private CheckBox showPasswordCheck;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField showPasswordField;
+    @FXML private CheckBox showPasswordCheck;
 
     @FXML
     void togglePassword() {
@@ -56,7 +46,7 @@ public class LoginController {
         String password = passwordField.isVisible() ? passwordField.getText() : showPasswordField.getText();
 
         if (roleGroup.getSelectedToggle() == null) {
-            new Alert(Alert.AlertType.WARNING, "Please select a role (Doctor/Admin).").show();
+            new Alert(Alert.AlertType.WARNING, "Please select a role (Doctor/Admin/Patient).").show();
             return;
         }
 
@@ -69,7 +59,11 @@ public class LoginController {
             new Alert(Alert.AlertType.WARNING, "Enter a valid email address.").show();
             return;
         }
-        String role = adminRadio.isSelected() ? "ADMIN" : "DOCTOR";
+
+        String role;
+        if (adminRadio.isSelected()) role = "ADMIN";
+        else if (doctorRadio.isSelected()) role = "DOCTOR";
+        else role = "PATIENT";
 
         UserDAO dao = new UserDAO();
         if (!dao.authenticateAndLoad(role, email, password)) {
@@ -77,9 +71,21 @@ public class LoginController {
             return;
         }
 
+        if ("PATIENT".equals(role)) {
+            PatientDAO pdao = new PatientDAO();
+            Integer pid = pdao.findPatientIdByUserId(Session.getUserId());
+            if (pid == null) {
+                new Alert(Alert.AlertType.ERROR, "Patient profile not found. Create account again.").show();
+                return;
+            }
+            Session.setPatientId(pid);
+        }
 
-
-        String fxmlToLoad = adminRadio.isSelected() ? "admin_dashboard.fxml" : "doctor_dashboard.fxml";
+        String fxmlToLoad = switch (role) {
+            case "ADMIN" -> "admin_dashboard.fxml";
+            case "DOCTOR" -> "doctor_dashboard.fxml";
+            default -> "patient_dashboard.fxml";
+        };
 
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlToLoad));
@@ -88,6 +94,18 @@ public class LoginController {
             stage.show();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Failed to open dashboard.").show();
+        }
+    }
+
+    @FXML
+    void openSignup(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("signup.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to open signup.").show();
         }
     }
 }

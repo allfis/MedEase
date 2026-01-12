@@ -15,13 +15,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400" prefWidth="600" styleClass="root-pane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.medeasedesktop.LoginController">
+<AnchorPane prefHeight="400" prefWidth="600" styleClass="root-pane"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.medeasedesktop.LoginController">
 
     <stylesheets>
         <URL value="@css/login.css" />
     </stylesheets>
 
-    <VBox alignment="CENTER" prefWidth="380" spacing="16" styleClass="login-card" AnchorPane.bottomAnchor="40" AnchorPane.leftAnchor="110" AnchorPane.rightAnchor="110" AnchorPane.topAnchor="40">
+    <VBox alignment="CENTER" prefWidth="380" spacing="16" styleClass="login-card"
+          AnchorPane.bottomAnchor="40" AnchorPane.leftAnchor="110"
+          AnchorPane.rightAnchor="110" AnchorPane.topAnchor="40">
 
         <ImageView fx:id="logoImage" fitHeight="80" fitWidth="80" preserveRatio="true">
             <image>
@@ -42,15 +47,18 @@
                 </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="adminRadio" text="Admin" toggleGroup="$roleGroup" />
+            <RadioButton fx:id="patientRadio" text="Patient" toggleGroup="$roleGroup" />
         </HBox>
 
         <TextField fx:id="emailField" promptText="Email" />
 
         <PasswordField fx:id="passwordField" promptText="Password" />
-        <TextField fx:id="showPasswordField" promptText="Password" visible="false" />
+        <TextField fx:id="showPasswordField" promptText="Password" visible="false" managed="false" />
 
         <CheckBox fx:id="showPasswordCheck" onAction="#togglePassword" text="Show Password" />
 
         <Button onAction="#handleLogin" prefWidth="160" text="Login" />
+        <Button onAction="#openSignup" prefWidth="160" text="Sign Up" />
+
     </VBox>
 </AnchorPane>

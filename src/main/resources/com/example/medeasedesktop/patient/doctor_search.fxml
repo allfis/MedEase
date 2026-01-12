@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.medeasedesktop.DoctorSearchController"
+      spacing="12" styleClass="content-card">
+
+    <HBox spacing="10">
+        <TextField fx:id="queryField" promptText="Search by name / email / specialty / hospital"/>
+        <Button text="Search" onAction="#handleSearch"/>
+        <Button text="Clear" onAction="#handleClear"/>
+        <Button text="Open Profile" onAction="#openProfile"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" text=""/>
+
+    <TableView fx:id="doctorTable" prefHeight="360">
+        <columns>
+            <TableColumn fx:id="nameCol" text="Name" prefWidth="200"/>
+            <TableColumn fx:id="emailCol" text="Email" prefWidth="220"/>
+            <TableColumn fx:id="specialtyCol" text="Specialty" prefWidth="160"/>
+            <TableColumn fx:id="hospitalCol" text="Hospital" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+</VBox>
